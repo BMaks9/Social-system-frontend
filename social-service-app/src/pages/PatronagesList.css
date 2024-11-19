@@ -1,0 +1,20 @@
+/* .container {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  width: 100%;
+} */
+.containerLoading {
+  filter: blur(8px);
+}
+.g-2{
+  width: 941px;
+  padding: 20px;
+  margin: 50px;
+}
+
+/* @media (max-width: 600px) {
+  .container{
+      min-width: auto;
+  }
+} */

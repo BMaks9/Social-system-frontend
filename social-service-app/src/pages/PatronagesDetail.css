@@ -1,0 +1,35 @@
+.album_page_loader_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .font-60{
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 133%;
+    color: #0e6f31
+  }
+  .font-30{
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 133%;
+    color: #0e6f31;
+  }
+  .font-40{
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 200%;
+    color: #0e6f31;
+  }
+  .font-20{
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 120%;
+    color: #000;
+  }
+  .image{
+    width: auto;
+    height: 340px;
+    z-index: 0;
+  }

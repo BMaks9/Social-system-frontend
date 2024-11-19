@@ -1,0 +1,42 @@
+
+.inputField > input {
+    border-radius: 6px;
+    width: 750px;
+    height: 41px;
+    padding: 0px 5px 0px 20px;
+    margin-inline: 34px 10px;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.3);
+    background: #fff;
+    border: none;
+}
+
+.inputField > input:focus{
+    outline: none;
+    border:2px solid #3d951b;
+}
+.inputField > button {
+    border-radius: 6px;
+    width: 100px;
+    height: 41px;
+    border: none;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.3);
+    background: linear-gradient(90deg, #a0f26d 25%, #0E6F31 100%);
+  
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 140%;
+    text-align: center;
+    color: #fff;
+  
+    margin-right: auto;
+}
+.inputField > button:hover{
+    background: #0e6f31;
+}
+.inputField{
+    width: 941px;
+    height: 41px;
+    margin: 20px auto 0px auto;
+    display: flex;
+    align-items: center;
+}

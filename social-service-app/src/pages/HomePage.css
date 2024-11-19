@@ -1,0 +1,25 @@
+#font-40-home{
+    line-height: 100%;
+    width: 150%;
+}
+.button-home{
+    height: 15%;
+    border-radius: 6px;
+    border: none !important;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.3);
+    background: linear-gradient(90deg, #a0f26d 25%, #0E6F31 100%);
+    
+    font-weight: 500 !important;
+    font-size: 20px !important;
+    line-height: 140% !important;
+    text-align: center !important;
+    color: #fff !important;
+    margin-right: auto;
+
+}
+.button-home:hover{
+    background: #0e6f31 !important;
+}
+.button-home:active{
+    transform: scale(0.95);
+}
