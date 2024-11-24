@@ -15,6 +15,7 @@ export const PatronageCard: FC<ICardProps> = ({
   title,
   img,
 }) => {
+  if (!id) {return null}
   return (
     <Card className="card">
       <Card.Img
