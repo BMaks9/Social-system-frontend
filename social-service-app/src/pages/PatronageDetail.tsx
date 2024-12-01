@@ -10,8 +10,7 @@ import defaultImg from "../components/defaultImg.jpg";
 
 export const PatronageDetailPage: FC = () => {
   const [pageData, setPageDdata] = useState<Patronage>();
-
-  const { id } = useParams(); // ид страницы, пример: "/albums/12"
+  const { id } = useParams(); // ид страницы
 
   useEffect(() => {
     if (!id) return;
