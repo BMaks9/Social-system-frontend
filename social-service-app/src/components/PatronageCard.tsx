@@ -3,6 +3,7 @@ import { Button, Card } from "react-bootstrap";
 import "./PatronageCard.css";
 import defaultImg from './defaultImg.jpg'
 import { ROUTES } from "../Routes";
+import { NavLink } from "react-router-dom";
 
 interface ICardProps {
   id: number
@@ -27,8 +28,8 @@ export const PatronageCard: FC<ICardProps> = ({
         <div className="titleStyle">
           <Card.Title>{title}</Card.Title>
         </div>
-        <Button className="cardButton"  variant="none" href={`${ROUTES.SERVICES}/${id}`}>
-          Подробней
+        <Button className="cardButton"  variant="none">
+          <NavLink to = {`${ROUTES.SERVICES}/${id}`} className='textButton'>Подробней</NavLink>
         </Button>
       </Card.Body>
     </Card>

@@ -4,14 +4,34 @@ import { Col, Row, Spinner } from "react-bootstrap";
 import { Patronage, getPatronage } from "../modules/SocialServiceApi";
 import InputField from "../components/InputField";
 import { BreadCrumbs } from "../components/BreadCrumbs";
-import { ROUTES, ROUTE_LABELS } from "../Routes";
+import { ROUTE_LABELS } from "../Routes";
 import { PatronageCard } from "../components/PatronageCard";
 import  {PATRONAGES_MOCK}  from "../modules/mock";
 
+
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store';
+import { setSearchTerm } from '../slices/dataSlices';
+
 const PatronageListPage: FC = () => {
-  const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [patronage, setPatronage] = useState<Patronage[]>([]);
+  
+  const dispatch = useDispatch();
+  const handleSearchSubmit = () => {
+    dispatch(setSearchTerm(searchValue));
+  };
+
+  const { searchTerm } = useSelector(
+    (state: RootState) => state.filter
+  );
+  
+  const [searchValue, setSearchValue] = useState<string>(searchTerm);
+  const filteredServices = PATRONAGES_MOCK.filter((service) => {
+    return (
+      (searchTerm ? service.title.toLowerCase().startsWith(searchTerm.toLowerCase()) : true)
+    );
+  });
 
   const handleSearch = () => {
     setLoading(true);
@@ -24,27 +44,26 @@ const PatronageListPage: FC = () => {
       })
       .catch(() => { // В случае ошибки используем mock данные, фильтруем по имени 
         setPatronage(
-          PATRONAGES_MOCK
+          filteredServices
           )
         setLoading(false);
       });
   };
 
   useEffect(() => {
-    handleSearch();  // Например, загрузим музыку по запросу "pop" сразу при загрузке
-  }, []);
+    handleSearch();
+  }, [searchTerm]);
 
   return (
     <div className="container">
       <BreadCrumbs crumbs={[{ label: ROUTE_LABELS.SERVICES }]} />
-      
       <InputField
         value={searchValue}
-        setValue={(value) => setSearchValue(value)}
-        loading={loading}
-        onSubmit={handleSearch}
+        setValue={setSearchValue}
+        onSubmit={handleSearchSubmit}
+        placeholder="Поиск по услуге"
+        buttonTitle="Найти"
       />
-
       {loading && (
         <div className="loadingBg">
           <Spinner animation="border" />
@@ -57,15 +76,19 @@ const PatronageListPage: FC = () => {
             <h1>Пусто</h1>
           </div>
         ) : (
-          <Row xs={4} md={4} className="g-2" style={{marginInline: 'auto'}}>
+          <Row 
+              className="g-2"  /* Большее расстояние между карточками */
+              style={{ marginInline: 'auto' }}
+>
             {patronage.map((item, index) => (
-              <Col key={index} style={{padding:'0px'}}>
+              <Col key={index} style={{ padding: '0', justifyItems: 'center'}}>
                 <PatronageCard {...item} />
               </Col>
             ))}
           </Row>
         ))
         }
+    
     </div>
   );
 };

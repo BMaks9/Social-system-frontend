@@ -8,11 +8,32 @@
   filter: blur(8px);
 }
 .g-2{
-  width: 941px;
+  /* width: 941px;
   padding: 20px;
-  margin: 50px;
+  margin: 50px; */
+  padding: 20px 4% 0 4%;
+  max-width: 980px;
 }
 
+/* @media (max-width: 1000px) {
+  .g-2 {
+      flex-direction: column;
+      align-items: center;
+
+  }
+}
+@media (max-width: 545px) {
+  .g-2 {
+      flex-direction: column;
+      align-items: center;
+      gap: 0px ;
+  }}
+@media (max-width: 460px) {
+  .g-2 {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px 0;
+  }} */
 /* @media (max-width: 600px) {
   .container{
       min-width: auto;

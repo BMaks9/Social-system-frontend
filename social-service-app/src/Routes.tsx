@@ -1,5 +1,5 @@
 export const ROUTES = {
-    HOME: "/home",
+    HOME: "/",
     SERVICES: "/list-patronage",
   }
   export type RouteKeyType = keyof typeof ROUTES;

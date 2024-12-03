@@ -76,7 +76,13 @@
         justify-content: center !important;
         align-items: center !important;
 }
-
+.textButton{
+    text-decoration: none;
+    color: #000 ;
+}
+.textButton:hover{
+    color: black;
+}
 .cardButton:active, .cardButton:active, .cardButton:active{
     transform: scale(0.95);
 }

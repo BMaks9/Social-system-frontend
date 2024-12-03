@@ -1,6 +1,6 @@
-import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { ROUTES } from '../Routes';
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   const headerStyle = {
@@ -18,20 +18,24 @@ const Header = () => {
     <Navbar style={headerStyle}>
       <Container fluid style={{ display: 'flex', flexDirection: 'row', margin: '0px'}}>
         {/* Логотип или название сайта */}
-        <Navbar.Brand href={`${ROUTES.HOME}`} style={{
-          fontWeight: '700',
-          fontSize: '24px',
-          color: '#fff'
-        }}>Домой</Navbar.Brand>
+        <Navbar.Brand>
+        <NavLink to = {`${ROUTES.HOME}`} style={{
+            fontWeight: '700',
+            fontSize: '24px', 
+            color: '#fff',
+            textDecoration: 'none'
+          }}>Домой</NavLink>  
+        </Navbar.Brand>
         
         {/* Навигация (ссылки) */}
         <Nav className="ml-auto"> {/* Используем ml-auto для отступа справа */}
             {
-              <Nav.Link href={`${ROUTES.SERVICES}`} style={{
+              <NavLink to ={`${ROUTES.SERVICES}`} style={{
                 fontWeight: '700',
                 fontSize: '18px',
-                color: '#fff'
-              }}>Услуги</Nav.Link>
+                color: '#fff',
+                textDecoration: 'none'
+              }}>Услуги</NavLink>
             // <Nav.Link href="#pricing">Заявки</Nav.Link>
             }
         </Nav>

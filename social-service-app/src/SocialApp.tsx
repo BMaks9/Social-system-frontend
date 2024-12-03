@@ -3,10 +3,12 @@ import { PatronageDetailPage } from "./pages/PatronageDetail";
 import PatronageListPage from "./pages/PatronagesList";
 import { ROUTES } from "./Routes";
 import { HomePage } from "./pages/HomePage";
+import Header from './components/Header.tsx'
 
 function SocialApp() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Social-system-frontend">
+      <Header/>
       <Routes>
         <Route path={ROUTES.HOME} index element={<HomePage />} />
         <Route path={ROUTES.SERVICES} element={<PatronageListPage />} />
