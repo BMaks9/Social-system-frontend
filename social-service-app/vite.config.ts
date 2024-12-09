@@ -18,8 +18,8 @@ export default defineConfig({
         enabled: true,
       },
       manifest:{
-        name: "Tile Notes",
-        short_name: "Tile Notes",
+        name: "Social Service",
+        short_name: "Social Service",
         start_url: '/Social-system-frontend/',
         display: "standalone",
         background_color: "#fdfdfd",
@@ -38,12 +38,13 @@ export default defineConfig({
       }
     })
   ],
-  base: '/Social-system-frontend',
+  // base: '/Social-system-frontend',
   server: {
+    host: '0.0.0.0',
     port: 3000,
     proxy: {
       "/patronages": {
-        target: "http://192.168.0.10:8000",
+        target: "http://localhost:8000",
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/patronages/, "/patronages"),
       },
