@@ -1,17 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import mkcert from 'vite-plugin-mkcert'
+// import mkcert from 'vite-plugin-mkcert'
 import { VitePWA } from 'vite-plugin-pwa'
-import fs from 'fs';
-import path from 'path';
-
+// import fs from 'fs';
+// import path from 'path';
+import {api_proxy_addr, dest_root} from "./src/target_config"
 // https://vite.dev/config/
 
 
 export default defineConfig({
   plugins: [
     react(),
-    mkcert(),
+    // mkcert(),
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {
@@ -38,21 +38,21 @@ export default defineConfig({
       }
     })
   ],
-  // base: '/Social-system-frontend',
+  base: dest_root,
   server: {
     host: '0.0.0.0',
     port: 3000,
     proxy: {
       "/patronages": {
-        target: "http://localhost:8000",
+        target: api_proxy_addr,
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/patronages/, "/patronages"),
       },
     },
-    https:{
-      key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
-      cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
-    },
+    // https:{
+    //   key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
+    //   cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
+    // },
   },
 });
 

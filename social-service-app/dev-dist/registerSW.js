@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/Social-system-frontend/dev-sw.js?dev-sw', { scope: '/Social-system-frontend/', type: 'classic' })

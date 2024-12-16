@@ -10,6 +10,7 @@
     "beforeBuildCommand": "npm run build"
   },
   "app": {
+    "withGlobalTauri": true,
     "windows": [
       {
         "title": "social-service-app",
@@ -33,5 +34,10 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
-  }
+  },
+  "plugins": {
+        "http": {
+          "enabled": true
+        }
+    }
 }
