@@ -41,3 +41,51 @@
     display: flex;
     align-items: center;
 }
+/* .basket{
+    width: 34px;
+    height: 38px;
+  
+    border: none;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+}
+.basket-num{
+    
+   
+    line-height: 100%;
+    text-align: center;
+    
+    background: none;
+    position: absolute;
+    margin-left: 7px;
+    margin-bottom: 2px;
+    z-index: 2;
+  } */
+  /* container для изображения и текста */
+.basket-container {
+    position: relative; /* Для абсолютного позиционирования текста */
+    display: inline-block;
+  }
+  
+  .image-container {
+    position: relative;
+  }
+  
+  .basket-image {
+    width: 34px;
+    height: 38px;
+  }
+  
+  .basket-num {
+    position: absolute; /* Позиционирование текста поверх изображения */
+    top: 50%; /* Центрируем по вертикали */
+    left: 50%; /* Центрируем по горизонтали */
+    transform: translate(-11%, -56%); /* Для точного центрирования */
+    font-size: 16px;/* Размер текста */
+    font-weight: 900; /* Жирный шрифт */
+    color: #4aa317;
+  }
+  

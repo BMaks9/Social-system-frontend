@@ -1,0 +1,4 @@
+.custom-focus:focus {
+    border-color: #28a745 !important; /* Зеленый цвет */
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.5) !important; /* Зеленое свечение */
+  }

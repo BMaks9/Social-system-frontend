@@ -7,9 +7,10 @@ import { Patronage, getPatronageId } from "../modules/SocialServiceApi";
 import { Col, Row, Spinner, Image } from "react-bootstrap";
 import { PATRONAGES_MOCK } from "../modules/mock";
 import defaultImg from "../components/defaultImg.jpg";
+import { GetPatronagesDetail } from "../api/Api";
 
 export const PatronageDetailPage: FC = () => {
-  const [pageData, setPageDdata] = useState<Patronage>();
+  const [pageData, setPageDdata] = useState<GetPatronagesDetail>();
   const { id } = useParams(); // ид страницы
 
   useEffect(() => {

@@ -43,7 +43,22 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 3000,
     proxy: {
-      "/patronages": {
+      "/patronages/": {
+        target: api_proxy_addr,
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/patronages/, "/patronages"),
+      },
+      "/login": {
+        target: api_proxy_addr,
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/patronages/, "/patronages"),
+      },
+      "/logout": {
+        target: api_proxy_addr,
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/patronages/, "/patronages"),
+      },
+      "/disabilities": {
         target: api_proxy_addr,
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/patronages/, "/patronages"),

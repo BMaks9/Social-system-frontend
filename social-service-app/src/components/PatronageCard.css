@@ -1,4 +1,4 @@
-.card {
+.patronage-card {
     border-radius: 10px;
     width: 200px;
     height: 320px;
@@ -76,12 +76,34 @@
         justify-content: center !important;
         align-items: center !important;
 }
+.buttonAdd{
+    border-radius: 8px !important;
+    border: none !important;
+    width: 173px !important;
+    height: 49px !important;
+    background: linear-gradient(90deg, #a0f26d 25%, #0e6f31 100%) !important;
+  
+    font-weight: 500 !important;
+    font-size: 16px !important;
+    line-height: 100% !important;
+    color: #fff !important;
+  
+    box-shadow: 2px 3px 5px 1px rgba(0, 0, 0, 0.3) !important;
+    margin-top: 5px;
+  }
 .textButton{
     text-decoration: none;
     color: #000 ;
 }
+.textAddButton{
+    text-decoration: none;
+    color: #fff ;
+}
 .textButton:hover{
     color: black;
+}
+.textAddButton:hover{
+    color: green;
 }
 .cardButton:active, .cardButton:active, .cardButton:active{
     transform: scale(0.95);
