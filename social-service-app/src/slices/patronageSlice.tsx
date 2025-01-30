@@ -29,8 +29,6 @@ export const getPatronageList = createAsyncThunk(
         withCredentials: true, // Включаем отправку cookies
       });
       
-      
-
       // Обработка ответа
       const app_id = response.data[response.data.length - 1].disabilities_id; // ID черновой заявки
       const count = response.data[response.data.length - 1].current_count; // количество услуг в черновой заявке

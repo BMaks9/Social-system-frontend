@@ -1,17 +1,20 @@
 // src/store.ts
-import { configureStore } from '@reduxjs/toolkit';
-import filterReducer from './slices/dataSlices';
-import authReducer from './slices/authSlice';
-import patronageReducer from './slices/patronageSlice'
-import userReducer from './slices/userSlice'; 
-import disabilityDraftSliceReducer from './slices/disabilityDraftSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import filterReducer from "./slices/dataSlices";
+import authReducer from "./slices/authSlice";
+import patronageReducer from "./slices/patronageSlice";
+import userReducer from "./slices/userSlice";
+import disabilityDraftSliceReducer from "./slices/disabilityDraftSlice";
+import disabilitiesSliceReducer from "./slices/disabilitiesSlice";
+
 // Создание Redux store с фильтром
 const store = configureStore({
   reducer: {
     filter: filterReducer,
     patronages: patronageReducer,
-    user: userReducer,  
+    user: userReducer,
     disabilityDraft: disabilityDraftSliceReducer,
+    disabilities: disabilitiesSliceReducer,
   },
 });
 

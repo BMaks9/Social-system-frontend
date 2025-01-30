@@ -108,3 +108,22 @@
 .cardButton:active, .cardButton:active, .cardButton:active{
     transform: scale(0.95);
 }
+
+.input-comment {
+    width: 100%;
+    resize: none;
+    border-color: #28a745; /* Стандартная рамка */
+    box-shadow: none !important; /* Нет свечения по умолчанию */
+    outline: none !important; /* Убираем стандартное выделение */
+  }
+  
+  /* При наведении появляется зеленое свечение */
+  .input-comment:hover {
+    border-color: #000000 !important; /* Зеленая рамка */
+  }
+  
+  /* При фокусе (когда поле активно) тоже можно добавить свечение */
+  .input-comment:focus {
+    box-shadow: none !important; /* Зеленое свечение */
+    border-color: #28a745 !important; /* Зеленая рамка */
+  }

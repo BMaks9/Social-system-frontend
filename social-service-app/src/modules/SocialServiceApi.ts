@@ -37,17 +37,17 @@ export interface Patronage {
     );
   };
  
-  export const getDisabilities = async (): Promise<Disability[]> => {
-    return fetch(`${dest_api}/disabilities/`)
-      .then((response) => response.json())  // Ответ будет массивом объектов
-  };
+  // // export const getDisabilities = async (): Promise<Disability[]> => {
+  // //   return fetch(`${dest_api}/disabilities/`)
+  // //     .then((response) => response.json())  // Ответ будет массивом объектов
+  // // };
 
-  export const getDisabilityId = async (
-    id: number | string
-  ): Promise<Disability> => {
-    return fetch(`${dest_api}/disabilities/${id}/`).then(
-      (response) => response.json()
-    );
-  };
+  // export const getDisabilityId = async (
+  //   id: number | string
+  // ): Promise<Disability> => {
+  //   return fetch(`${dest_api}/disabilities/${id}/`).then(
+  //     (response) => response.json()
+  //   );
+  // };
 
   

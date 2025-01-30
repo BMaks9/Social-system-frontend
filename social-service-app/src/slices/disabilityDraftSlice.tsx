@@ -1,9 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { api } from '../api';
-import axios from 'axios';
-import { RootState } from '../store';
-import Cookies from 'js-cookie';
-import { GetPatronages, GetPatronagesDetail } from '../api/Api';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { api } from "../api";
+import axios from "axios";
+import { RootState } from "../store";
+import Cookies from "js-cookie";
+import { GetPatronages, GetPatronagesDetail } from "../api/Api";
 
 export interface Patronage {
   id?: number;
@@ -16,9 +16,9 @@ export interface Patronage {
 
 export interface DisabilityData {
   id?: number;
-  disability_phone?: string | '';
-  disability_address?: string | '';
-  disability_patronages?: Patronage[] | [],
+  disability_phone?: string | "";
+  disability_address?: string | "";
+  disability_patronages?: Patronage[] | [];
 }
 
 export interface DisabilityState {
@@ -34,8 +34,8 @@ const initialState: DisabilityState = {
   current_count: 0,
 
   disabilityData: {
-    disability_address: '',
-    disability_phone: '',
+    disability_address: "",
+    disability_phone: "",
     disability_patronages: [],
   },
   error: null,
@@ -43,13 +43,13 @@ const initialState: DisabilityState = {
 };
 
 export const getDisability = createAsyncThunk(
-  'disabilityApplication/getDisabilityApplication',
+  "disabilityApplication/getDisabilityApplication",
   async (id: string) => {
-    const csrfToken = Cookies.get('csrftoken'); // Убедитесь, что путь корректный
+    const csrfToken = Cookies.get("csrftoken"); // Убедитесь, что путь корректный
     const response = await axios.get(`/disabilities/${id}/`, {
       withCredentials: true,
       headers: {
-        'X-CSRFToken': csrfToken, // Добавление CSRF-токена в заголовки
+        "X-CSRFToken": csrfToken, // Добавление CSRF-токена в заголовки
       },
     });
 
@@ -57,30 +57,33 @@ export const getDisability = createAsyncThunk(
   }
 );
 
-
 export const addPatronageToDisability = createAsyncThunk(
-  'patronages/addPatronageToDisability',
+  "patronages/addPatronageToDisability",
   async (id: number) => {
-    const csrfToken = Cookies.get('csrftoken'); // Убедитесь, что путь корректный
-    const response = await axios.post(`/patronages/${id}/draft/`, {}, {
-      withCredentials: true,
-      headers: {
-        'X-CSRFToken': csrfToken, // Добавление CSRF-токена в заголовки
-      },
-    });
+    const csrfToken = Cookies.get("csrftoken"); // Убедитесь, что путь корректный
+    const response = await axios.post(
+      `/patronages/${id}/draft/`,
+      {},
+      {
+        withCredentials: true,
+        headers: {
+          "X-CSRFToken": csrfToken, // Добавление CSRF-токена в заголовки
+        },
+      }
+    );
 
     return response.data;
   }
 );
 
 export const deleteDisability = createAsyncThunk(
-  'disability/deleteDisability',
+  "disability/deleteDisability",
   async (id: string) => {
-    const csrfToken = Cookies.get('csrftoken'); // Убедитесь, что путь корректный
+    const csrfToken = Cookies.get("csrftoken"); // Убедитесь, что путь корректный
     const response = await axios.delete(`/disabilities/${id}/`, {
       withCredentials: true,
       headers: {
-        'X-CSRFToken': csrfToken, // Добавление CSRF-токена в заголовки
+        "X-CSRFToken": csrfToken, // Добавление CSRF-токена в заголовки
       },
     });
 
@@ -89,51 +92,70 @@ export const deleteDisability = createAsyncThunk(
 );
 
 export const saveDisability = createAsyncThunk(
-  'disability/modifyDisability',
-  async ({ appId, disabilityData }: { appId: string; disabilityData: DisabilityData }) => {
-    const csrfToken = Cookies.get('csrftoken');
+  "disability/modifyDisability",
+  async ({
+    appId,
+    disabilityData,
+  }: {
+    appId: string;
+    disabilityData: DisabilityData;
+  }) => {
+    const csrfToken = Cookies.get("csrftoken");
 
     // 1. Сначала обновляем данные
     const disabilityDataToSend = {
-      address: disabilityData?.disability_address ?? '',
-      phone: disabilityData?.disability_phone ?? '',
+      address: disabilityData?.disability_address ?? "",
+      phone: disabilityData?.disability_phone ?? "",
     };
 
     await axios.put(`/disabilities/${appId}/`, disabilityDataToSend, {
       withCredentials: true,
       headers: {
-        'X-CSRFToken': csrfToken,
+        "X-CSRFToken": csrfToken,
       },
     });
 
     // 2. Затем отправляем "submit"
-    const response = await axios.put(`/disabilities/${appId}/submit/`, {}, {
-      withCredentials: true,
-      headers: {
-        'X-CSRFToken': csrfToken,
-      },
-    });
+    const response = await axios.put(
+      `/disabilities/${appId}/submit/`,
+      {},
+      {
+        withCredentials: true,
+        headers: {
+          "X-CSRFToken": csrfToken,
+        },
+      }
+    );
 
     return response.data;
   }
 );
 
 export const deletePatronagesFromDisability = createAsyncThunk(
-  'patronages/deletePatronagesFromDisability',
-  async ({ disabilityId, patronageId }: { disabilityId: number; patronageId: number }) => {
-    const csrfToken = Cookies.get('csrftoken'); // Убедитесь, что путь корректный
-    const response = await axios.delete(`/disabilities/${disabilityId}/patronage/${patronageId}/`, {
-      withCredentials: true,
-      headers: {
-        'X-CSRFToken': csrfToken, // Добавление CSRF-токена в заголовки
-      },
-    });
-    return response.data
-  });
-
+  "patronages/deletePatronagesFromDisability",
+  async ({
+    disabilityId,
+    patronageId,
+  }: {
+    disabilityId: number;
+    patronageId: number;
+  }) => {
+    const csrfToken = Cookies.get("csrftoken"); // Убедитесь, что путь корректный
+    const response = await axios.delete(
+      `/disabilities/${disabilityId}/patronage/${patronageId}/`,
+      {
+        withCredentials: true,
+        headers: {
+          "X-CSRFToken": csrfToken, // Добавление CSRF-токена в заголовки
+        },
+      }
+    );
+    return response.data;
+  }
+);
 
 const disabilityDraftSlice = createSlice({
-  name: 'disabilityDraft',
+  name: "disabilityDraft",
   initialState,
   reducers: {
     setId: (state, action) => {
@@ -144,11 +166,11 @@ const disabilityDraftSlice = createSlice({
     },
     setError: (state, action) => {
       state.error = action.payload;
-  },
+    },
     setDisabilityData: (state, action) => {
       state.disabilityData = {
-          ...state.disabilityData,
-          ...action.payload,
+        ...state.disabilityData,
+        ...action.payload,
       };
     },
     setPatronages: (state, action) => {
@@ -158,43 +180,41 @@ const disabilityDraftSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getDisability.fulfilled, (state, action) => {
-        
         const { id, phone, address, patronages, status } = action.payload;
         if (id && patronages) {
-            state.id = id;
-            state.isDraft = status === 'draft';
-            state.disabilityData = {
-                id: id,
-                disability_address: address,
-                disability_phone: phone,
-                disability_patronages: patronages || [],
-            };
+          state.id = id;
+          state.isDraft = status === "draft";
+          state.disabilityData = {
+            id: id,
+            disability_address: address,
+            disability_phone: phone,
+            disability_patronages: patronages || [],
+          };
         }
       })
       .addCase(getDisability.rejected, (state) => {
-        state.error = 'Ошибка при загрузке данных';
+        state.error = "Ошибка при загрузке данных";
       })
       .addCase(deleteDisability.fulfilled, (state) => {
         state.id = NaN;
         state.current_count = NaN;
         state.disabilityData = {
           disability_patronages: [],
-          disability_address: '',
-          disability_phone: ''
+          disability_address: "",
+          disability_phone: "",
         };
       })
       .addCase(deleteDisability.rejected, (state) => {
-        state.error = 'Ошибка при удалении вакансии';
+        state.error = "Ошибка при удалении вакансии";
       })
       .addCase(saveDisability.fulfilled, (state, action) => {
         state.disabilityData = action.payload;
       })
       .addCase(saveDisability.rejected, (state) => {
-        state.error = 'Ошибка при обновлении данных';
-      })
+        state.error = "Ошибка при обновлении данных";
+      });
   },
 });
-
-
-  export const { setId, setCount, setError, setDisabilityData, setPatronages } = disabilityDraftSlice.actions;
-  export default disabilityDraftSlice.reducer;
+export const { setId, setCount, setError, setDisabilityData, setPatronages } =
+  disabilityDraftSlice.actions;
+export default disabilityDraftSlice.reducer;

@@ -1,93 +1,83 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Disability, getDisabilities } from "../modules/SocialServiceApi";
-import {ROUTES} from '../Routes'
-const DisabilityTablePagePage = () => {
-  const [loading, setLoading] = useState(true); // Состояние для анимации загрузки
-  const [error, setError] = useState(''); // Состояние для обработки ошибок
-  const { isAuthenticated } = useSelector((state:any) => state.auth); // Проверка на авторизацию
-  const [requests, setDisability] = useState<Disability[]>([]);
+import React, { FC, useEffect, useState } from "react";
+import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { ROUTES } from "../Routes";
+import { AppDispatch, RootState } from "../store";
+import { getDisabilities } from "../slices/disabilitiesSlice";
+import { Button, Table, Spinner } from "react-bootstrap";
+import "./DisabilityTablePage.css";
 
-  const handleSearch = () => {
-    setLoading(true);
-    getDisabilities()
-      .then((response) => {
-        setDisability(
-          response
-        )
-        setLoading(false);
-      })
-      .catch(() => { // В случае ошибки используем mock данные, фильтруем по имени 
-        setLoading(false);
-      });
-  };
+const DisabilityTablePage = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { disabilities, loading } = useSelector(
+    (state: RootState) => state.disabilities
+  );
+  const navigate = useNavigate();
 
   useEffect(() => {
-    handleSearch();
-  }, [isAuthenticated]);
+    dispatch(getDisabilities());
+  }, [dispatch]);
+
+  const handleCardClick = (id: number | undefined) => {
+    navigate(`${ROUTES.DISABILITY}/${id}`);
+  };
 
   return (
-<div className="container-fluid bg-white text-dark min-vh-100">
-  <div className="container my-4">
-    <h2 className="mb-9 text-success">Мои заявки</h2>
-
-    {loading ? (
-      <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>
-        <div className="spinner-border text-success" role="status">
-          <span className="visually-hidden">Загрузка...</span>
+    <>
+      {loading && (
+        <div className="loadingBg">
+          <Spinner animation="border" />
         </div>
-      </div>
-    ) : error ? (
-      <div className="alert alert-danger">{error}</div>
-    ) : (
-      <div className="table-responsive">
-        <table className="table table-bordered table-hover">
-          <thead className="bg-success text-white table-success">
+      )}
+
+      <div className="overflow-x-auto p-4">
+        <Table striped bordered hover responsive className="text-center">
+          <thead className="table-header">
+            {" "}
+            {/* Применяем кастомный класс */}
             <tr>
-              <th className="text-center">Номер заявки</th>
-              <th className="text-center">Статус</th>
-              <th className="text-center">Дата создания</th>
-              <th className="text-center">Дата формирования</th>
-              <th className="text-center">Дата завершения</th>
-              <th className="text-center">Модератор</th>
-              <th className="text-center">Дата доставки</th>
-              <th className="text-center">Действия</th>
+              <th>ID</th>
+              <th>Телефон</th>
+              <th>Адрес</th>
+              <th>Статус</th>
+              <th>Дата создания</th>
+              <th>Дата компиляции</th>
+              <th>Дата завершения</th>
+              <th>Дата доставки</th>
+              <th>Создатель</th>
+              <th>Модератор</th>
+              <th>Действие</th>
             </tr>
           </thead>
           <tbody>
-            {requests.map((request) => (
-              <tr key={request.id}>
-                <td className="text-center">{request.id}</td>
-                <td className="text-center">{request.status}</td>
-                <td className="text-center">{new Date(request.data_created).toLocaleString()}</td>
-                <td className="text-center">
-                  {request.data_compilation != null ? new Date(request.data_compilation).toLocaleString() : '—'}
-                </td>
-                <td className="text-center">
-                  {request.data_finished != null ? new Date(request.data_finished).toLocaleString() : '—'}
-                </td>
-                <td className="text-center">{request.moderator}</td>
-                <td className="text-center">{request.date_dilivery}</td>
-                <td className="text-center">
-                  <Link to={`${ROUTES.DISABILITY}/${request.id}`} className="btn btn-outline-success">
-                    Просмотр
-                  </Link>
+            {disabilities.map((item) => (
+              <tr key={item.id}>
+                <td>{item.id}</td>
+                <td>{item.phone}</td>
+                <td>{item.address}</td>
+                <td>{item.status}</td>
+                <td>{item.data_created}</td>
+                <td>{item.data_compilation}</td>
+                <td>{item.data_finished}</td>
+                <td>{item.date_dilivery}</td>
+                <td>{item.creator}</td>
+                <td>{item.moderator}</td>
+                <td>
+                  <Button
+                    variant="success"
+                    onClick={() => handleCardClick(item.id)}
+                  >
+                    Открыть
+                  </Button>
                 </td>
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
-    )}
-  </div>
-</div>
-
-
-
+    </>
   );
 };
-
-export default DisabilityTablePagePage;
+export default DisabilityTablePage;

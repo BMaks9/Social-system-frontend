@@ -17,11 +17,12 @@ export const PatronageDetailPage: FC = () => {
     if (!id) return;
     getPatronageId(id)
       .then((response) => setPageDdata(response))
-      .catch(() =>  // В случае ошибки используем mock данные, фильтруем по имени 
+      .catch(() =>
+        // В случае ошибки используем mock данные, фильтруем по имени
         setPageDdata(
           PATRONAGES_MOCK.find((patronage) => String(patronage.id) == id)
-          )
-      )
+        )
+      );
   }, [id]);
 
   return (
@@ -35,26 +36,24 @@ export const PatronageDetailPage: FC = () => {
       {pageData ? ( // проверка на наличие данных, иначе загрузка
         <div className="container">
           <Row>
-            <Col md={6} style={{alignContent:'center'}}>
-              <p className="font-60">
-                {pageData.title}
-              </p>
+            <Col md={6} style={{ alignContent: "center" }}>
+              <p className="font-60">{pageData.title}</p>
               <p className="font-30">для пожилых и маломобильных граждан</p>
             </Col>
-            <Col md={6} style={{display: 'flex',justifyContent:'center'}}>
-              <Image className="image"
+            <Col md={6} style={{ display: "flex", justifyContent: "center" }}>
+              <Image
+                className="image"
                 src={pageData.img || defaultImg} // дефолтное изображение, если нет artworkUrl100
                 alt="Картинка"
               />
             </Col>
             <p className="font-40">Что мы делаем?</p>
-            <p className="font-20">
-                {pageData.description}
-              </p>
+            <p className="font-20">{pageData.description}</p>
           </Row>
         </div>
       ) : (
-        <div className="album_page_loader_block">{/* загрузка */}
+        <div className="album_page_loader_block">
+          {/* загрузка */}
           <Spinner animation="border" />
         </div>
       )}
