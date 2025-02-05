@@ -3,11 +3,12 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { ROUTES } from "../Routes";
+import { ROUTE_LABELS, ROUTES } from "../Routes";
 import { AppDispatch, RootState } from "../store";
 import { getDisabilities } from "../slices/disabilitiesSlice";
 import { Button, Table, Spinner } from "react-bootstrap";
 import "./DisabilityTablePage.css";
+import { BreadCrumbs } from "../components/BreadCrumbs";
 
 const DisabilityTablePage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,7 +32,14 @@ const DisabilityTablePage = () => {
           <Spinner animation="border" />
         </div>
       )}
-
+      <BreadCrumbs
+        crumbs={[
+          {
+            label: ROUTE_LABELS.DISABILITY,
+            path: ROUTES.DISABILITY,
+          },
+        ]}
+      />
       <div className="overflow-x-auto p-4">
         <Table striped bordered hover responsive className="text-center">
           <thead className="table-header">

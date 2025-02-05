@@ -7,16 +7,19 @@ import { NavLink } from "react-router-dom";
 import {
   deletePatronagesFromDisability,
   setPatronages,
+  savePatronagesFromDisability,
 } from "../slices/disabilityDraftSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store";
-import { DisabilityData } from "../slices/disabilityDraftSlice";
+import {
+  DisabilityData,
+  setDisabilityData,
+} from "../slices/disabilityDraftSlice";
 
 interface ICardProps {
   id?: number;
   title?: string;
   img?: string;
-  comment?: string;
   isDraft?: boolean;
   disabilityData?: DisabilityData;
 }
@@ -25,7 +28,6 @@ export const DisabilityCard: FC<ICardProps> = ({
   id,
   title,
   img,
-  comment,
   isDraft,
   disabilityData,
 }) => {
@@ -48,6 +50,51 @@ export const DisabilityCard: FC<ICardProps> = ({
             (patronage) => patronage.id !== id
           )
         )
+      );
+    }
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+
+    // Убедимся, что disabilityData и disability_patronages существуют
+    if (disabilityData?.disability_patronages) {
+      const updatedPatronages = disabilityData.disability_patronages.map(
+        (patronage) => {
+          // Если id совпадает, обновляем comment
+          if (patronage.id === id) {
+            return {
+              ...patronage,
+              comment: value || "", // Если value пустое, записываем пустую строку
+            };
+          }
+          return patronage;
+        }
+      );
+
+      // Обновляем состояние с новым массивом patronages
+      dispatch(
+        setDisabilityData({
+          ...disabilityData,
+          disability_patronages: updatedPatronages, // Обновляем только patronages
+        })
+      );
+    }
+  };
+
+  const SaveInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value } = e.target;
+    if (id && disabilityData?.id) {
+      dispatch(
+        savePatronagesFromDisability({
+          disabilityId: disabilityData.id,
+          patronageId: id,
+          comment: value,
+        })
       );
     }
   };
@@ -145,11 +192,19 @@ export const DisabilityCard: FC<ICardProps> = ({
               Комментарий
             </label>
             <Form.Control
+              name="comment"
               as="textarea"
               id="comment-input"
               rows={3}
               className="input-comment"
-              defaultValue={comment}
+              value={
+                disabilityData?.disability_patronages?.find(
+                  (patronage) => patronage.id === id
+                )?.comment || ""
+              }
+              onChange={handleInputChange}
+              onBlur={SaveInputChange}
+              disabled={!isDraft}
             />
           </Col>
         </Row>

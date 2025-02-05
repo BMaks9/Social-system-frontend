@@ -42,6 +42,7 @@ const initialState: DisabilityState = {
   isDraft: false,
 };
 
+// получаем список услуг
 export const getDisability = createAsyncThunk(
   "disabilityApplication/getDisabilityApplication",
   async (id: string) => {
@@ -57,6 +58,7 @@ export const getDisability = createAsyncThunk(
   }
 );
 
+// добавляем услугу в заявку
 export const addPatronageToDisability = createAsyncThunk(
   "patronages/addPatronageToDisability",
   async (id: number) => {
@@ -76,6 +78,7 @@ export const addPatronageToDisability = createAsyncThunk(
   }
 );
 
+// очищаем заявку от услуг
 export const deleteDisability = createAsyncThunk(
   "disability/deleteDisability",
   async (id: string) => {
@@ -91,8 +94,8 @@ export const deleteDisability = createAsyncThunk(
   }
 );
 
-export const saveDisability = createAsyncThunk(
-  "disability/modifyDisability",
+export const saveDataDisability = createAsyncThunk(
+  "disability/saveDataDisability",
   async ({
     appId,
     disabilityData,
@@ -102,20 +105,29 @@ export const saveDisability = createAsyncThunk(
   }) => {
     const csrfToken = Cookies.get("csrftoken");
 
-    // 1. Сначала обновляем данные
     const disabilityDataToSend = {
       address: disabilityData?.disability_address ?? "",
       phone: disabilityData?.disability_phone ?? "",
     };
 
-    await axios.put(`/disabilities/${appId}/`, disabilityDataToSend, {
-      withCredentials: true,
-      headers: {
-        "X-CSRFToken": csrfToken,
-      },
-    });
-
-    // 2. Затем отправляем "submit"
+    const response = await axios.put(
+      `/disabilities/${appId}/`,
+      disabilityDataToSend,
+      {
+        withCredentials: true,
+        headers: {
+          "X-CSRFToken": csrfToken,
+        },
+      }
+    );
+    return response.data;
+  }
+);
+// сохраняем заявку
+export const saveDisability = createAsyncThunk(
+  "disability/modifyDisability",
+  async ({ appId }: { appId: string }) => {
+    const csrfToken = Cookies.get("csrftoken");
     const response = await axios.put(
       `/disabilities/${appId}/submit/`,
       {},
@@ -126,13 +138,13 @@ export const saveDisability = createAsyncThunk(
         },
       }
     );
-
     return response.data;
   }
 );
 
+// удаляем услугу из заявки
 export const deletePatronagesFromDisability = createAsyncThunk(
-  "patronages/deletePatronagesFromDisability",
+  "disability/deletePatronagesFromDisability",
   async ({
     disabilityId,
     patronageId,
@@ -143,6 +155,33 @@ export const deletePatronagesFromDisability = createAsyncThunk(
     const csrfToken = Cookies.get("csrftoken"); // Убедитесь, что путь корректный
     const response = await axios.delete(
       `/disabilities/${disabilityId}/patronage/${patronageId}/`,
+      {
+        withCredentials: true,
+        headers: {
+          "X-CSRFToken": csrfToken, // Добавление CSRF-токена в заголовки
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
+// сохраняем поле М-М
+export const savePatronagesFromDisability = createAsyncThunk(
+  "disability/savePatronagesFromDisability",
+  async ({
+    disabilityId,
+    patronageId,
+    comment,
+  }: {
+    disabilityId: number;
+    patronageId: number;
+    comment: string;
+  }) => {
+    const csrfToken = Cookies.get("csrftoken"); // Убедитесь, что путь корректный
+    const response = await axios.put(
+      `/disabilities/${disabilityId}/patronage/${patronageId}/`,
+      { comment: comment },
       {
         withCredentials: true,
         headers: {
