@@ -160,7 +160,7 @@ export const DisabilityCard: FC<ICardProps> = ({
             </NavLink>
             {isDraft && (
               <Button
-                className="save-button me-2"
+                className="delete-button me-2"
                 variant="danger"
                 style={{
                   width: "147px",

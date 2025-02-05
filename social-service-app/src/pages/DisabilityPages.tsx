@@ -21,6 +21,7 @@ import {
 import "../components/PatronageCard.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import imgDisability from "../components/disability.png";
 
 const DisabilityPage: FC = () => {
   const { id } = useParams();
@@ -36,7 +37,15 @@ const DisabilityPage: FC = () => {
     (state: RootState) => state.disabilityDraft
   );
 
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.user.isAuthenticated
+  );
+
   useEffect(() => {
+    // if (!isAuthenticated) {
+    //   //navigate(ROUTES.H);
+    //   return;
+    // }
     if (id) {
       dispatch(getDisability(id));
     }
@@ -127,88 +136,133 @@ const DisabilityPage: FC = () => {
             />
           </div>
         )}
+
         <div
           style={{
-            padding: "0",
             display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
+            justifyContent: "center", // Центрируем содержимое по горизонтали
+            alignItems: "flex-start", // Выравнивание по верхнему краю
+            width: "100%", // Занимает всю ширину экрана
+            padding: "20px 0", // Отступ сверху и снизу
           }}
         >
-          <Row className="mb-3">
-            <Col xs={12}>
-              <Form.Group
-                controlId="formPhone"
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: "10px",
-                  marginTop: "20px",
-                }}
-              >
-                <Form.Label
-                  style={{
-                    width: "80px",
-                    textAlign: "right",
-                    marginRight: "10px",
-                  }}
-                >
-                  Телефон
-                </Form.Label>
-                <Form.Control
-                  type="tel"
-                  name="disability_phone"
-                  className="input-comment"
-                  placeholder="Введите телефон"
-                  value={disabilityData.disability_phone ?? ""}
-                  onChange={handleInputChange}
-                  onBlur={handleBlur}
-                  required
-                  disabled={!isDraft}
-                  style={{ width: "300px" }} // Устанавливаем ширину
-                />
-              </Form.Group>
-            </Col>
-          </Row>
+          {/* Контейнер для двух колонок */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center", // Центрируем колонки
+              width: "auto", // Ограничиваем ширину контейнера
+              gap: "150px", // Расстояние между колонками
+            }}
+          >
+            {/* Левая колонка с полями */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center", // Выравнивание полей по центру
+                justifyContent: "flex-start",
+                flex: 1, // Растягиваем колонку по ширине
+              }}
+            >
+              <Row className="mb-3">
+                <Col xs={12}>
+                  <Form.Group
+                    controlId="formPhone"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginBottom: "10px",
+                      marginTop: "20px",
+                    }}
+                  >
+                    <Form.Label
+                      style={{
+                        width: "80px",
+                        textAlign: "right",
+                        marginRight: "10px",
+                      }}
+                    >
+                      Телефон
+                    </Form.Label>
+                    <Form.Control
+                      type="tel"
+                      name="disability_phone"
+                      className="input-comment"
+                      placeholder="Введите телефон"
+                      value={disabilityData.disability_phone ?? ""}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
+                      required
+                      disabled={!isDraft}
+                      style={{ width: "300px" }} // Устанавливаем ширину
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
 
-          <Row className="mb-3">
-            <Col xs={12}>
-              <Form.Group
-                controlId="formAddress"
+              <Row className="mb-3">
+                <Col xs={12}>
+                  <Form.Group
+                    controlId="formAddress"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <Form.Label
+                      style={{
+                        width: "80px",
+                        textAlign: "right",
+                        marginRight: "10px",
+                      }}
+                    >
+                      Адрес
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="disability_address"
+                      className="input-comment"
+                      placeholder="Введите адрес"
+                      value={disabilityData.disability_address ?? ""}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
+                      required
+                      disabled={!isDraft}
+                      style={{ width: "300px" }} // Устанавливаем ширину
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+            </div>
+
+            {/* Правая колонка с картинкой */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center", // Центрируем картинку
+                alignItems: "center", // Выравнивание по вертикали
+                flex: 1, // Растягиваем колонку по ширине
+                width: "auto", // Контейнер картинкой должен иметь ширину, соответствующую картинке
+              }}
+            >
+              <Image
+                src={imgDisability}
+                alt="Корзина"
+                fluid
                 style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: "10px",
+                  maxWidth: "100%", // Картинка не превышает ширину контейнера
+                  height: "auto", // Сохраняем пропорции картинки
+                  maxHeight: "100px", // Ограничиваем высоту картинки
                 }}
-              >
-                <Form.Label
-                  style={{
-                    width: "80px",
-                    textAlign: "right",
-                    marginRight: "10px",
-                  }}
-                >
-                  Адрес
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  name="disability_address"
-                  className="input-comment"
-                  placeholder="Введите адрес"
-                  value={disabilityData.disability_address ?? ""}
-                  onChange={handleInputChange}
-                  onBlur={handleBlur}
-                  required
-                  disabled={!isDraft}
-                  style={{ width: "300px" }} // Устанавливаем ширину
-                />
-              </Form.Group>
-            </Col>
-          </Row>
+              />
+            </div>
+          </div>
         </div>
+
         {disabilityData ? (
           disabilityData.disability_patronages?.map((item) => (
             <Col
@@ -216,7 +270,7 @@ const DisabilityPage: FC = () => {
               style={{
                 padding: "0",
                 display: "flex",
-                justifyContent: "center",
+                justifyContent: "center", // Центрируем карточки
               }}
             >
               <DisabilityCard
@@ -232,13 +286,13 @@ const DisabilityPage: FC = () => {
             <Spinner animation="border" />
           </div>
         )}
+
         {isDraft && (
-          <div className="d-flex justify-content-center mt-3">
-            <Button
-              className="save-button me-2"
-              variant="success"
-              onClick={handleDelete}
-            >
+          <div
+            className="d-flex justify-content-center mt-3"
+            style={{ marginBottom: "20px" }}
+          >
+            <Button className="delete-button me-2" onClick={handleDelete}>
               Очистить
             </Button>
             <Button
