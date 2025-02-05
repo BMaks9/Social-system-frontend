@@ -19,6 +19,8 @@ import {
   saveDisability,
 } from "../slices/disabilityDraftSlice";
 import "../components/PatronageCard.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const DisabilityPage: FC = () => {
   const { id } = useParams();
@@ -85,12 +87,17 @@ const DisabilityPage: FC = () => {
     }
   };
 
-  const handleSaveDisability = () => {
+  const handleSaveDisability = async () => {
     if (id) {
       try {
-        dispatch(saveDisability({ appId: id }));
+        await dispatch(saveDisability({ appId: id })).unwrap();
+        navigate(`${ROUTES.SERVICES}`);
       } catch (error) {
         dispatch(setError(error));
+        toast.error("Ошибка! Заполните поля заявки", {
+          position: "bottom-right",
+          autoClose: 2000, // Авто-закрытие через 3 сек
+        });
       }
     }
   };

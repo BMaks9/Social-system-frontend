@@ -1,7 +1,6 @@
 // src/store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import filterReducer from "./slices/dataSlices";
-import authReducer from "./slices/authSlice";
 import patronageReducer from "./slices/patronageSlice";
 import userReducer from "./slices/userSlice";
 import disabilityDraftSliceReducer from "./slices/disabilityDraftSlice";

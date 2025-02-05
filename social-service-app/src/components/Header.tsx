@@ -5,7 +5,6 @@ import { NavLink } from "react-router-dom";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"; // Импортируем необходимые хуки из Redux
-import { logout } from "../slices/authSlice"; // Импортируем экшн logout
 import axios from "axios"; // Импортируем axios
 import Cookies from "js-cookie"; // Импортируем js-cookie для работы с cookies
 
@@ -36,7 +35,6 @@ const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const username = useSelector((state: RootState) => state.user.username); // получение значения username из стора
-  console.log("Username from store: ", username);
   const isAuthenticated = useSelector(
     (state: RootState) => state.user.isAuthenticated
   );
@@ -50,29 +48,7 @@ const Header = () => {
 
     await dispatch(getPatronageList()); // для показа очищения поля поиска
   };
-  // const handleLogout = async (e: React.MouseEvent<HTMLAnchorElement>) => {
-  //   e.preventDefault();
 
-  //   try {
-  //     const csrfToken = Cookies.get('csrftoken'); // Получаем CSRF токен из cookies
-
-  //     const response = await axios.post('/logout/', {}, {
-  //       headers: {
-  //         'X-CSRFToken': csrfToken, // Подставляем CSRF токен в заголовок запроса
-  //         'Content-Type': 'application/json',
-  //       },
-  //       // withCredentials: true,
-  //     });
-
-  //     if (response.status === 200) {
-  //       dispatch(logout());
-  //       navigate('/login');
-  //     }
-  //   } catch (error) {
-  //     console.error('Ошибка при выходе:', error);
-  //     alert('Ошибка при выходе. Пожалуйста, попробуйте позже.');
-  //   }
-  // };
   return (
     <Navbar style={headerStyle}>
       <Container

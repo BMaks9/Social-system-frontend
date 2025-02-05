@@ -1,10 +1,66 @@
-import {FC} from 'react'
-import { InputGroup, Col, Button, Row, Container, Card, Form } from 'react-bootstrap'
+import { FC } from "react";
+import {
+  InputGroup,
+  Col,
+  Button,
+  Row,
+  Container,
+  Card,
+  Form,
+} from "react-bootstrap";
 import { ROUTES } from "../Routes";
-import { NavLink } from "react-router-dom";
-import './LoginPage.css'
+import { NavLink, useNavigate } from "react-router-dom";
+import "./LoginPage.css";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store";
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import { regUserAsync } from "../slices/userSlice";
+import { toast } from "react-toastify";
 
 export const RegisterPage: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+    confirmPassword: "",
+    email: "",
+  });
+  const error = useSelector((state: RootState) => state.user.error);
+
+  // Обработчик события изменения полей ввода
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      toast.warn("Пароли не совпадают!", {
+        position: "bottom-right",
+        autoClose: 2000, // Авто-закрытие через 3 сек
+      });
+      return;
+    }
+    if (formData.username && formData.password) {
+      try {
+        await dispatch(regUserAsync(formData)).unwrap();
+        navigate(`${ROUTES.LOGIN}`);
+        toast.success("Пользователь зарегистрирован", {
+          position: "bottom-right",
+          autoClose: 2000, // Авто-закрытие через 3 сек
+        });
+      } catch (error) {
+        toast.warn("Такой пользователь уже существует", {
+          position: "bottom-right",
+          autoClose: 2000, // Авто-закрытие через 3 сек
+        });
+      }
+    }
+  };
+
   return (
     <Container>
       <Row className="vh-100 d-flex justify-content-center align-items-center">
@@ -14,31 +70,68 @@ export const RegisterPage: FC = () => {
             <Card.Body>
               <div className="mb-3 mt-4">
                 <h2 className="fw-bold text-uppercase mb-2">Регистрация</h2>
-                <p className="mb-5">Пожалуйста введите свои данные!</p>
-                <Form>
+                <p className="mb-5">Пожалуйста, введите свои данные!</p>
+                <Form onSubmit={handleSubmit}>
                   <Row className="mb-3">
-                    <Form.Group as={Col} className="mb-3" controlId="formFullName">
+                    <Form.Group
+                      as={Col}
+                      className="mb-3"
+                      controlId="formUsername"
+                    >
                       <Form.Label className="text-center">Логин</Form.Label>
-                      <Form.Control type="text" placeholder="Введите логин" className='custom-focus'/>
+                      <Form.Control
+                        name="username"
+                        type="text"
+                        placeholder="Введите логин"
+                        className="custom-focus"
+                        value={formData.username}
+                        onChange={handleChange}
+                      />
                     </Form.Group>
 
-                    <Form.Group as={Col} className="mb-3" controlId="formPhoneNumber">
-                      <Form.Label>Номер телефона</Form.Label>
-                      <Form.Control type="number" placeholder="Введите номер телефона" className='custom-focus'/>
+                    <Form.Group as={Col} className="mb-3" controlId="formEmail">
+                      <Form.Label>Email</Form.Label>
+                      <Form.Control
+                        name="email"
+                        type="email"
+                        placeholder="Введите email"
+                        className="custom-focus"
+                        value={formData.email}
+                        onChange={handleChange}
+                      />
                     </Form.Group>
                   </Row>
                   <Row className="mb-3">
-                    <Form.Group as={Col} className="mb-3" controlId="formUsername">
-                      <Form.Label className="text-center">Email адрес</Form.Label>
-                      <InputGroup>
-                        <Form.Control type="email" placeholder="Введите email" className='custom-focus'/>
-                        <InputGroup.Text className="text-success">@yandex.com</InputGroup.Text>
-                      </InputGroup>
+                    <Form.Group
+                      as={Col}
+                      className="mb-3"
+                      controlId="formPassword"
+                    >
+                      <Form.Label>Пароль</Form.Label>
+                      <Form.Control
+                        name="password"
+                        type="password"
+                        placeholder="Введите пароль"
+                        className="custom-focus"
+                        value={formData.password}
+                        onChange={handleChange}
+                      />
                     </Form.Group>
 
-                    <Form.Group as={Col} className="mb-3" controlId="formBasicPassword">
-                      <Form.Label>Пароль</Form.Label>
-                      <Form.Control type="password" placeholder="Пароль" className='custom-focus' />
+                    <Form.Group
+                      as={Col}
+                      className="mb-3"
+                      controlId="formConfirmPassword"
+                    >
+                      <Form.Label>Подтвердите пароль</Form.Label>
+                      <Form.Control
+                        name="confirmPassword"
+                        type="password"
+                        placeholder="Повторите пароль"
+                        className="custom-focus"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                      />
                     </Form.Group>
                   </Row>
                   <div className="d-grid">
@@ -49,8 +142,8 @@ export const RegisterPage: FC = () => {
                 </Form>
                 <div className="mt-3">
                   <p className="mb-0 text-center">
-                    Уже есть акаунт?{' '}
-                    <NavLink to = {ROUTES.LOGIN}>Авторизация</NavLink>
+                    Уже есть аккаунт?{" "}
+                    <NavLink to={ROUTES.LOGIN}>Авторизация</NavLink>
                   </p>
                 </div>
               </div>
@@ -59,5 +152,5 @@ export const RegisterPage: FC = () => {
         </Col>
       </Row>
     </Container>
-  )
-}
+  );
+};

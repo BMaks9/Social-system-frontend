@@ -9,6 +9,7 @@ import { addPatronageToDisability } from "../slices/disabilityDraftSlice";
 import { getPatronageList } from "../slices/patronageSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
+import { toast } from "react-toastify";
 
 interface ICardProps {
   id?: number;
@@ -28,7 +29,14 @@ export const PatronageCard: FC<ICardProps> = ({ id, title, img }) => {
   // Обработчик события нажатия на кнопку "Добавить"
   const handleAdd = async () => {
     if (id) {
-      await dispatch(addPatronageToDisability(id));
+      try {
+        await dispatch(addPatronageToDisability(id)).unwrap();
+      } catch (error) {
+        toast.warn("Услуга уже есть в заявке", {
+          position: "bottom-right",
+          autoClose: 2000, // Авто-закрытие через 3 сек
+        });
+      }
       await dispatch(getPatronageList()); // Для обновления отображения состояния иконки "корзины"
     }
   };

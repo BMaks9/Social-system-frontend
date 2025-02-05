@@ -9,15 +9,19 @@ import { dest_root } from "./target_config.ts";
 import { RegisterPage } from "./pages/RegisterPage.tsx";
 import DisabilityTablePage from "./pages/DisabilityTablePage.tsx";
 import DisabilityPage from "./pages/DisabilityPages.tsx";
+import UserProfilePage from "./pages/UserProfilePage.tsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SocialApp() {
   return (
     <BrowserRouter basename={dest_root}>
+      <ToastContainer aria-label="Notifications" />
       <Header />
       <Routes>
-        <Route path={ROUTES.REGISTER} index element={<RegisterPage />} />
-        <Route path={ROUTES.LOGIN} index element={<LoginPage />} />
         <Route path={ROUTES.HOME} index element={<HomePage />} />
+        <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
+        <Route path={ROUTES.LOGIN} element={<LoginPage />} />
         <Route path={ROUTES.SERVICES} element={<PatronageListPage />} />
         <Route
           path={`${ROUTES.SERVICES}/:id`}
@@ -25,6 +29,7 @@ function SocialApp() {
         />
         <Route path={ROUTES.DISABILITY} element={<DisabilityTablePage />} />
         <Route path={`${ROUTES.DISABILITY}/:id`} element={<DisabilityPage />} />
+        <Route path={ROUTES.PROFILE} element={<UserProfilePage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,69 +1,137 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { api } from '../api';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { api } from "../api";
+import axios from "axios";
+import Cookies from "js-cookie";
+
 interface UserState {
   username: string;
   isAuthenticated: boolean;
-  error?: string | null; 
+  error?: string | null;
 }
 
 const initialState: UserState = {
-  username: '',
+  username: "",
   isAuthenticated: false,
   error: null,
 };
 
 // Асинхронное действие для авторизации
 
-
 export const loginUserAsync = createAsyncThunk(
-    'user/loginUserAsync',
-    async ({ username, password }: { username: string; password: string }, { rejectWithValue }) => {
-        const csrfToken = Cookies.get('csrftoken');
-        const session_id = Cookies.get('session_id');
-      try {
-        const { data } = await axios.post('http://192.168.56.1:8000/login/', { username, password }, {
-            withCredentials: true, // Включаем отправку cookies
-            headers: {
-              'X-CSRFToken': csrfToken, 
-            //   'session_id' : session_id,// Добавляем CSRF токен в заголовок
-            }, // Для передачи cookies
-        });
-        return data; // Возвращаем данные из ответа
-      } catch (error: any) {
-        return rejectWithValue(error.response?.data?.error || 'Ошибка авторизации'); // Возвращаем более информативную ошибку
-      }
-    }
-  );
-  
-
-
-// Асинхронное действие для деавторизации
-
-export const logoutUserAsync = createAsyncThunk(
-  'user/logoutUserAsync',
-  async (_, { rejectWithValue }) => {
-    const csrfToken = Cookies.get('csrftoken');
-    const session_id = Cookies.get('session_id');
+  "user/loginUserAsync",
+  async (
+    { username, password }: { username: string; password: string },
+    { rejectWithValue }
+  ) => {
+    const csrfToken = Cookies.get("csrftoken");
     try {
-      const { data } = await axios.post('http://192.168.56.1:8000/logout/', null, {
-        withCredentials: true, // Включаем отправку cookies
-        headers: {
-          'X-CSRFToken': csrfToken,
-          
-        }, // Для передачи cookies с запросом
-      });
+      const { data } = await axios.post(
+        "http://192.168.56.1:8000/users/login/",
+        { username, password },
+        {
+          withCredentials: true, // Включаем отправку cookies
+          headers: {
+            "X-CSRFToken": csrfToken,
+          }, // Для передачи cookies
+        }
+      );
       return data; // Возвращаем данные из ответа
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Ошибка при выходе из системы');
+      return rejectWithValue(
+        error.response?.data?.error || "Ошибка авторизации"
+      ); // Возвращаем более информативную ошибку
     }
   }
 );
 
+// Асинхронное действие для деавторизации
 
+export const logoutUserAsync = createAsyncThunk(
+  "user/logoutUserAsync",
+  async (_, { rejectWithValue }) => {
+    const csrfToken = Cookies.get("csrftoken");
+    try {
+      const { data } = await axios.post(
+        "http://192.168.56.1:8000/users/logout/",
+        null,
+        {
+          withCredentials: true, // Включаем отправку cookies
+          headers: {
+            "X-CSRFToken": csrfToken,
+          }, // Для передачи cookies с запросом
+        }
+      );
+      return data; // Возвращаем данные из ответа
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.error || "Ошибка при выходе из системы"
+      );
+    }
+  }
+);
+
+export const updateUserAsync = createAsyncThunk(
+  "user/updateUserAsync",
+  async (
+    {
+      username,
+      password,
+      email,
+    }: { username?: string; password?: string; email?: string },
+    { rejectWithValue }
+  ) => {
+    const csrfToken = Cookies.get("csrftoken");
+    try {
+      const { data } = await axios.put(
+        "http://192.168.56.1:8000/users/update_profile/",
+        { username, password, email },
+        {
+          withCredentials: true, // Включаем отправку cookies
+          headers: {
+            "X-CSRFToken": csrfToken,
+          }, // Для передачи cookies
+        }
+      );
+      return data; // Возвращаем данные из ответа
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.error || "Ошибка регистрации"
+      ); // Возвращаем более информативную ошибку
+    }
+  }
+);
+export const regUserAsync = createAsyncThunk(
+  "user/regUserAsync",
+  async (
+    {
+      username,
+      password,
+      email,
+    }: { username: string; password: string; email: string },
+    { rejectWithValue }
+  ) => {
+    const csrfToken = Cookies.get("csrftoken");
+    try {
+      const { data } = await axios.post(
+        "http://192.168.56.1:8000/users/register/",
+        { username, password, email },
+        {
+          withCredentials: true, // Включаем отправку cookies
+          headers: {
+            "X-CSRFToken": csrfToken,
+          }, // Для передачи cookies
+        }
+      );
+      return data; // Возвращаем данные из ответа
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.error || "Ошибка авторизации"
+      ); // Возвращаем более информативную ошибку
+    }
+  }
+);
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -72,24 +140,44 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
-        const { username, password} = action.payload;
+        const { username } = action.payload;
         state.username = username;
         state.isAuthenticated = true;
         state.error = null;
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
         state.error = action.payload as string;
-        state.isAuthenticated = false; 
+        state.isAuthenticated = false;
       })
 
       .addCase(logoutUserAsync.fulfilled, (state) => {
-        state.username = '';
+        state.username = "";
         state.isAuthenticated = false;
         state.error = null;
       })
       .addCase(logoutUserAsync.rejected, (state, action) => {
         state.error = action.payload as string;
-      });      
+      })
+
+      .addCase(updateUserAsync.fulfilled, (state, action) => {
+        const { username } = action.payload;
+        state.username = username;
+        state.error = null;
+      })
+
+      .addCase(updateUserAsync.rejected, (state, action) => {
+        state.error = action.payload as string;
+      })
+
+      .addCase(regUserAsync.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(regUserAsync.fulfilled, (state, action) => {
+        state.error = null;
+      })
+      .addCase(regUserAsync.rejected, (state, action) => {
+        state.error = action.payload as string;
+      });
   },
 });
 

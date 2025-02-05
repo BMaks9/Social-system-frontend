@@ -17,7 +17,6 @@ import { getPatronageList } from "../slices/patronageSlice";
 
 const PatronageListPage: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
 
   const { searchValue, patronage, loading } = useSelector(
     (state: RootState) => state.patronages
@@ -26,10 +25,6 @@ const PatronageListPage: FC = () => {
   useEffect(() => {
     dispatch(getPatronageList()); // отправляем `thunk`
   }, [dispatch]);
-
-  const handleCardClick = (patronages_id: number | undefined) => {
-    navigate(`${PATRONAGES_MOCK}/${patronages_id}`);
-  };
 
   return (
     <div className="container">
