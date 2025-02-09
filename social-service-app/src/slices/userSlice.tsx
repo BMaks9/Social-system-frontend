@@ -6,12 +6,14 @@ import Cookies from "js-cookie";
 interface UserState {
   username: string;
   isAuthenticated: boolean;
+  isStaff: boolean;
   error?: string | null;
 }
 
 const initialState: UserState = {
   username: "",
   isAuthenticated: false,
+  isStaff: false,
   error: null,
 };
 
@@ -140,8 +142,9 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
-        const { username } = action.payload;
+        const { username, is_staff } = action.payload;
         state.username = username;
+        state.isStaff = is_staff;
         state.isAuthenticated = true;
         state.error = null;
       })
@@ -153,6 +156,7 @@ const userSlice = createSlice({
       .addCase(logoutUserAsync.fulfilled, (state) => {
         state.username = "";
         state.isAuthenticated = false;
+        state.isStaff = false;
         state.error = null;
       })
       .addCase(logoutUserAsync.rejected, (state, action) => {

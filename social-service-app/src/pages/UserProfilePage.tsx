@@ -18,6 +18,7 @@ import { loginUserAsync, updateUserAsync } from "../slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { BreadCrumbs } from "../components/BreadCrumbs";
 import { toast } from "react-toastify";
+import ForbiddenPage from "./ForbiddenPage";
 
 const UserProfilePage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -62,7 +63,10 @@ const UserProfilePage = () => {
       });
     }
   };
-
+  if (!isAuthenticated) {
+    // если произошла ошибка или данные не найдены
+    return <ForbiddenPage />;
+  }
   return (
     <>
       <BreadCrumbs

@@ -22,6 +22,8 @@ import "../components/PatronageCard.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import imgDisability from "../components/disability.png";
+import NotFoundPage from "./NotFoundPage";
+import ForbiddenPage from "./ForbiddenPage";
 
 const DisabilityPage: FC = () => {
   const { id } = useParams();
@@ -46,11 +48,20 @@ const DisabilityPage: FC = () => {
     //   //navigate(ROUTES.H);
     //   return;
     // }
+
     if (id) {
       dispatch(getDisability(id));
     }
   }, [dispatch]);
 
+  if (error || !id) {
+    // если произошла ошибка или данные не найдены
+    return <NotFoundPage />;
+  }
+  if (!isAuthenticated) {
+    // если произошла ошибка или данные не найдены
+    return <ForbiddenPage />;
+  }
   const handleCardClick = (id: number | undefined) => {
     navigate(`${ROUTES.SERVICES}/${id}`);
   };

@@ -5,6 +5,7 @@ import patronageReducer from "./slices/patronageSlice";
 import userReducer from "./slices/userSlice";
 import disabilityDraftSliceReducer from "./slices/disabilityDraftSlice";
 import disabilitiesSliceReducer from "./slices/disabilitiesSlice";
+import patronageEditReducer from "./slices/PatronageEditSlice";
 
 // Создание Redux store с фильтром
 const store = configureStore({
@@ -14,6 +15,7 @@ const store = configureStore({
     user: userReducer,
     disabilityDraft: disabilityDraftSliceReducer,
     disabilities: disabilitiesSliceReducer,
+    patronageEdit: patronageEditReducer,
   },
 });
 

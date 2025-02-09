@@ -25,8 +25,8 @@ const InputField: FC<Props> = ({
   buttonTitle = "Найти",
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.user.isAuthenticated
+  const { isAuthenticated, isStaff } = useSelector(
+    (state: RootState) => state.user
   );
   const disabilities_id = useSelector(
     (state: RootState) => state.disabilityDraft.id
@@ -42,42 +42,72 @@ const InputField: FC<Props> = ({
     }
   };
   return (
-    <div className="inputField">
-      <input
-        value={value}
-        placeholder={placeholder}
-        onChange={(event) => dispatch(setSearchValue(event.target.value))}
-      />
-      <Button disabled={loading} onClick={() => dispatch(getPatronageList())}>
-        {buttonTitle}
-      </Button>
-      <NavLink
-        to={
-          !isAuthenticated || !disabilities_id
-            ? "#"
-            : `${ROUTES.DISABILITY}/${disabilities_id}`
-        } // Если нет `disabilities_id`, ссылка неактивна
-        className={`basket-container ${!isAuthenticated || !disabilities_id ? "disabled" : ""}`} // Добавляем `disabled`, если нет ID
-        onClick={(e) => {
-          if (!disabilities_id) {
-            e.preventDefault(); // Блокируем переход
-            return;
-          }
-        }}
-      >
-        <div className="image-container">
-          {isAuthenticated && (
-            <Image
-              src={imgBasket}
-              alt="Корзина"
-              fluid
-              className="basket-image"
-            />
-          )}
-          {isAuthenticated && <p className="basket-num">{current_count}</p>}
+    <>
+      {!isStaff ? (
+        <div className="inputField">
+          <input
+            value={value}
+            placeholder={placeholder}
+            onChange={(event) => dispatch(setSearchValue(event.target.value))}
+          />
+          <Button
+            disabled={loading}
+            onClick={() => dispatch(getPatronageList())}
+          >
+            {buttonTitle}
+          </Button>
+          <NavLink
+            to={
+              !isAuthenticated || !disabilities_id
+                ? "#"
+                : `${ROUTES.DISABILITY}/${disabilities_id}`
+            } // Если нет `disabilities_id`, ссылка неактивна
+            className={`basket-container ${!isAuthenticated || !disabilities_id ? "disabled" : ""}`} // Добавляем `disabled`, если нет ID
+            onClick={(e) => {
+              if (!disabilities_id) {
+                e.preventDefault(); // Блокируем переход
+                return;
+              }
+            }}
+          >
+            <div className="image-container">
+              {isAuthenticated && (
+                <Image
+                  src={imgBasket}
+                  alt="Корзина"
+                  fluid
+                  className="basket-image"
+                />
+              )}
+              {isAuthenticated && <p className="basket-num">{current_count}</p>}
+            </div>
+          </NavLink>
         </div>
-      </NavLink>
-    </div>
+      ) : (
+        <>
+          <div className="inputField">
+            <input
+              value={value}
+              placeholder={placeholder}
+              onChange={(event) => dispatch(setSearchValue(event.target.value))}
+            />
+            <Button
+              disabled={loading}
+              onClick={() => dispatch(getPatronageList())}
+            >
+              {buttonTitle}
+            </Button>
+            {/* <Button
+              disabled={loading}
+              style={{ marginLeft: "50px", background: "#0e6f31" }}
+              onClick={() => dispatch(getPatronageList())}
+            >
+              Добавить
+            </Button> */}
+          </div>
+        </>
+      )}
+    </>
   );
 };
 export default InputField;
