@@ -25,7 +25,7 @@ export const getPatronageList = createAsyncThunk(
     const { searchValue } = patronages;
     try {
       // Запрос с учетом сессионной авторизации, с передачей cookies
-      const response = await axios.get("http://192.168.56.1:8000/patronages/", {
+      const response = await axios.get("/api/patronages/", {
         params: { patronageName: searchValue },
         withCredentials: true, // Включаем отправку cookies
       });

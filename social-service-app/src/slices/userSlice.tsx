@@ -28,7 +28,7 @@ export const loginUserAsync = createAsyncThunk(
     const csrfToken = Cookies.get("csrftoken");
     try {
       const { data } = await axios.post(
-        "http://192.168.56.1:8000/users/login/",
+        "/api/users/login/",
         { username, password },
         {
           withCredentials: true, // Включаем отправку cookies
@@ -53,16 +53,12 @@ export const logoutUserAsync = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     const csrfToken = Cookies.get("csrftoken");
     try {
-      const { data } = await axios.post(
-        "http://192.168.56.1:8000/users/logout/",
-        null,
-        {
-          withCredentials: true, // Включаем отправку cookies
-          headers: {
-            "X-CSRFToken": csrfToken,
-          }, // Для передачи cookies с запросом
-        }
-      );
+      const { data } = await axios.post("/api/users/logout/", null, {
+        withCredentials: true, // Включаем отправку cookies
+        headers: {
+          "X-CSRFToken": csrfToken,
+        }, // Для передачи cookies с запросом
+      });
       return data; // Возвращаем данные из ответа
     } catch (error: any) {
       return rejectWithValue(
@@ -85,7 +81,7 @@ export const updateUserAsync = createAsyncThunk(
     const csrfToken = Cookies.get("csrftoken");
     try {
       const { data } = await axios.put(
-        "http://192.168.56.1:8000/users/update_profile/",
+        "/api/users/update_profile/",
         { username, password, email },
         {
           withCredentials: true, // Включаем отправку cookies
@@ -115,7 +111,7 @@ export const regUserAsync = createAsyncThunk(
     const csrfToken = Cookies.get("csrftoken");
     try {
       const { data } = await axios.post(
-        "http://192.168.56.1:8000/users/register/",
+        "/api/users/register/",
         { username, password, email },
         {
           withCredentials: true, // Включаем отправку cookies

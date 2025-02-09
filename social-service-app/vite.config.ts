@@ -6,12 +6,14 @@ import { VitePWA } from 'vite-plugin-pwa'
 // import path from 'path';
 import {api_proxy_addr, dest_root} from "./src/target_config"
 // https://vite.dev/config/
-
+import mkcert from 'vite-plugin-mkcert'
+import fs from 'fs';
+import path from 'path';
 
 export default defineConfig({
   plugins: [
     react(),
-    // mkcert(),
+    mkcert(),
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {
@@ -43,10 +45,11 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 3000,
     proxy: {
-      "/patronages/": {
+      "/api": {
         target: api_proxy_addr,
         changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/patronages/, "/patronages"),
+        secure: false, // Отключает проверку SSL (для HTTP)
+        rewrite: (path) => path.replace(/^\/api/, "/"),
       },
       "/login": {
         target: api_proxy_addr,
@@ -64,10 +67,10 @@ export default defineConfig({
         // rewrite: (path) => path.replace(/^\/patronages/, "/patronages"),
       },
     },
-    // https:{
-    //   key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
-    //   cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
-    // },
+    https:{
+      key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
+      cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
+    },
   },
 });
 

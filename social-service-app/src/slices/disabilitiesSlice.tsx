@@ -28,7 +28,7 @@ export const getDisabilities = createAsyncThunk(
     const { status, startDate, endDate } = disabilities;
 
     const csrfToken = Cookies.get("csrftoken"); // Убедитесь, что путь корректный
-    const response = await axios.get(`/disabilities/`, {
+    const response = await axios.get(`/api/disabilities/`, {
       params: { status: status, start_date: startDate, end_date: endDate },
       withCredentials: true,
       headers: {
@@ -44,7 +44,7 @@ export const completedDisabilities = createAsyncThunk(
   async ({ id, action }: { id: number; action: string }) => {
     const csrfToken = Cookies.get("csrftoken"); // Убедитесь, что путь корректный
     const response = await axios.put(
-      `/disabilities/${id}/complete/`,
+      `/api/disabilities/${id}/complete/`,
       {},
       {
         params: { action: action },

@@ -22,7 +22,7 @@ export const getPatronageDetail = createAsyncThunk(
   "patronage/getPatronageDetail",
   async (id: string) => {
     const csrfToken = Cookies.get("csrftoken"); // Убедитесь, что путь корректный
-    const response = await axios.get(`/patronages/${id}/`, {
+    const response = await axios.get(`/api/patronages/${id}/`, {
       withCredentials: true,
       headers: {
         "X-CSRFToken": csrfToken, // Добавление CSRF-токена в заголовки
@@ -41,16 +41,12 @@ export const updatePatronageAsync = createAsyncThunk(
   ) => {
     const csrfToken = Cookies.get("csrftoken");
     try {
-      const { data } = await axios.put(
-        `http://192.168.56.1:8000/patronages/${id}/`,
-        patronage,
-        {
-          withCredentials: true, // Включаем отправку cookies
-          headers: {
-            "X-CSRFToken": csrfToken,
-          }, // Для передачи cookies
-        }
-      );
+      const { data } = await axios.put(`/api/patronages/${id}/`, patronage, {
+        withCredentials: true, // Включаем отправку cookies
+        headers: {
+          "X-CSRFToken": csrfToken,
+        }, // Для передачи cookies
+      });
       return data; // Возвращаем данные из ответа
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.error || "Ошибка"); // Возвращаем более информативную ошибку
@@ -65,16 +61,12 @@ export const addPatronageAsync = createAsyncThunk(
   ) => {
     const csrfToken = Cookies.get("csrftoken");
     try {
-      const { data } = await axios.post(
-        `http://192.168.56.1:8000/patronages/`,
-        patronage,
-        {
-          withCredentials: true, // Включаем отправку cookies
-          headers: {
-            "X-CSRFToken": csrfToken,
-          }, // Для передачи cookies
-        }
-      );
+      const { data } = await axios.post(`/api/patronages/`, patronage, {
+        withCredentials: true, // Включаем отправку cookies
+        headers: {
+          "X-CSRFToken": csrfToken,
+        }, // Для передачи cookies
+      });
       return data; // Возвращаем данные из ответа
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.error || "Ошибка"); // Возвращаем более информативную ошибку
@@ -87,15 +79,12 @@ export const deletePatronageAsync = createAsyncThunk(
   async ({ id }: { id: number }, { rejectWithValue }) => {
     const csrfToken = Cookies.get("csrftoken");
     try {
-      const { data } = await axios.delete(
-        `http://192.168.56.1:8000/patronages/${id}/`,
-        {
-          withCredentials: true, // Включаем отправку cookies
-          headers: {
-            "X-CSRFToken": csrfToken,
-          }, // Для передачи cookies
-        }
-      );
+      const { data } = await axios.delete(`/api/patronages/${id}/`, {
+        withCredentials: true, // Включаем отправку cookies
+        headers: {
+          "X-CSRFToken": csrfToken,
+        }, // Для передачи cookies
+      });
       return data; // Возвращаем данные из ответа
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.error || "Ошибка"); // Возвращаем более информативную ошибку
@@ -118,7 +107,7 @@ export const imgPatronageAsync = createAsyncThunk(
     }
     try {
       const { data } = await axios.post(
-        `http://192.168.56.1:8000/patronages/${id}/image/`,
+        `/api/patronages/${id}/image/`,
         formData,
         {
           withCredentials: true, // Включаем отправку cookies

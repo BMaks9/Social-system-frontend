@@ -47,7 +47,7 @@ export const getDisability = createAsyncThunk(
   "disabilityApplication/getDisabilityApplication",
   async (id: string) => {
     const csrfToken = Cookies.get("csrftoken"); // Убедитесь, что путь корректный
-    const response = await axios.get(`/disabilities/${id}/`, {
+    const response = await axios.get(`/api/disabilities/${id}/`, {
       withCredentials: true,
       headers: {
         "X-CSRFToken": csrfToken, // Добавление CSRF-токена в заголовки
@@ -64,7 +64,7 @@ export const addPatronageToDisability = createAsyncThunk(
   async (id: number) => {
     const csrfToken = Cookies.get("csrftoken"); // Убедитесь, что путь корректный
     const response = await axios.post(
-      `/patronages/${id}/draft/`,
+      `/api/patronages/${id}/draft/`,
       {},
       {
         withCredentials: true,
@@ -83,7 +83,7 @@ export const deleteDisability = createAsyncThunk(
   "disability/deleteDisability",
   async (id: string) => {
     const csrfToken = Cookies.get("csrftoken"); // Убедитесь, что путь корректный
-    const response = await axios.delete(`/disabilities/${id}/`, {
+    const response = await axios.delete(`/api/disabilities/${id}/`, {
       withCredentials: true,
       headers: {
         "X-CSRFToken": csrfToken, // Добавление CSRF-токена в заголовки
@@ -111,7 +111,7 @@ export const saveDataDisability = createAsyncThunk(
     };
 
     const response = await axios.put(
-      `/disabilities/${appId}/`,
+      `/api/disabilities/${appId}/`,
       disabilityDataToSend,
       {
         withCredentials: true,
@@ -129,7 +129,7 @@ export const saveDisability = createAsyncThunk(
   async ({ appId }: { appId: string }) => {
     const csrfToken = Cookies.get("csrftoken");
     const response = await axios.put(
-      `/disabilities/${appId}/submit/`,
+      `/api/disabilities/${appId}/submit/`,
       {},
       {
         withCredentials: true,
@@ -154,7 +154,7 @@ export const deletePatronagesFromDisability = createAsyncThunk(
   }) => {
     const csrfToken = Cookies.get("csrftoken"); // Убедитесь, что путь корректный
     const response = await axios.delete(
-      `/disabilities/${disabilityId}/patronage/${patronageId}/`,
+      `/api/disabilities/${disabilityId}/patronage/${patronageId}/`,
       {
         withCredentials: true,
         headers: {
@@ -180,7 +180,7 @@ export const savePatronagesFromDisability = createAsyncThunk(
   }) => {
     const csrfToken = Cookies.get("csrftoken"); // Убедитесь, что путь корректный
     const response = await axios.put(
-      `/disabilities/${disabilityId}/patronage/${patronageId}/`,
+      `/api/disabilities/${disabilityId}/patronage/${patronageId}/`,
       { comment: comment },
       {
         withCredentials: true,
