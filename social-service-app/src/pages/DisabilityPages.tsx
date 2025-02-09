@@ -54,7 +54,7 @@ const DisabilityPage: FC = () => {
     }
   }, [dispatch]);
 
-  if (error || !id) {
+  if (!id) {
     // если произошла ошибка или данные не найдены
     return <NotFoundPage />;
   }

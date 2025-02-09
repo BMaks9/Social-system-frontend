@@ -54,6 +54,8 @@ export interface GetDisabylities {
    * @pattern ^[\w.@+-]+$
    */
   moderator?: string | null;
+
+  qr?: string
 }
 
 export interface GetDisabilitiesPatronage {

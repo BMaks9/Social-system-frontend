@@ -18,6 +18,8 @@ import { BreadCrumbs } from "../components/BreadCrumbs";
 import ForbiddenPage from "./ForbiddenPage";
 import { Table, Button, Row, Col, Form, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
+import svgQR from "../components/qr.svg";
+import svgTime from "../components/time.svg";
 
 const DisabilityTablePage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -174,6 +176,7 @@ const DisabilityTablePage = () => {
               <th>Дата доставки</th>
               <th>Создатель</th>
               <th>Модератор</th>
+              <th>QR</th>
               <th>Действие</th>
             </tr>
           </thead>
@@ -190,6 +193,40 @@ const DisabilityTablePage = () => {
                 <td>{item.date_dilivery}</td>
                 <td>{item.creator}</td>
                 <td>{item.moderator}</td>
+                <td>
+                  {" "}
+                  <div className="dinner-icon">
+                    {item.status !== "completed" ? (
+                      <img
+                        className="status-icon"
+                        src={svgTime}
+                        alt="Time Icon"
+                      />
+                    ) : (
+                      <div className="qr-hover-wrapper">
+                        <img
+                          className="status-icon"
+                          src={svgQR}
+                          alt="QR Icon"
+                        />
+                        <div className="qr-hover">
+                          {item.qr && (
+                            <img
+                              className="qr-code"
+                              src={`data:image/png;base64,${item.qr}`}
+                              alt="QR Code"
+                            />
+                          )}
+                          <p>
+                            Дата доставки
+                            <br />
+                            {item.date_dilivery}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>{" "}
+                </td>
                 <td>
                   {/* Показываем кнопки только если статус 'formated' */}
                   {item.status === "formed" && (
