@@ -3,6 +3,7 @@ import { GetPatronagesDetail } from "../api/Api";
 import { PATRONAGES_MOCK } from "../modules/mock"; // мок-данные
 import { setId, setCount } from "./disabilityDraftSlice";
 import axios from "axios";
+import { dest_api } from "../target_config";
 
 interface PatronageState {
   searchValue: string;
@@ -23,7 +24,7 @@ export const getPatronageList = createAsyncThunk(
     const { searchValue } = patronages;
     try {
       // Запрос с учетом сессионной авторизации, с передачей cookies
-      const response = await axios.get("/api/patronages/", {
+      const response = await axios.get(`${dest_api}/patronages/`, {
         params: { patronageName: searchValue },
         withCredentials: true, // Включаем отправку cookies
       });

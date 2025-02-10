@@ -32,7 +32,7 @@ export interface Patronage {
   export const getPatronageId = async (
     id: number | string
   ): Promise<Patronage> => {
-    return fetch(`${dest_api}/api/patronages/${id}/`).then(
+    return fetch(`${dest_api}/patronages/${id}/`).then(
       (response) => response.json()
     );
   };
