@@ -1,16 +1,15 @@
 import "./PatronagesList.css";
-import { FC, useState, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Button, Col, Row, Spinner, Table } from "react-bootstrap";
 
 import InputField from "../components/InputField";
 import { BreadCrumbs } from "../components/BreadCrumbs";
 import { ROUTE_LABELS, ROUTES } from "../Routes";
 import { PatronageCard } from "../components/PatronageCard";
-import { PATRONAGES_MOCK } from "../modules/mock";
 
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setSearchTerm } from "../slices/dataSlices";
+
 import { AppDispatch, RootState } from "../store";
 
 import { getPatronageList } from "../slices/patronageSlice";
@@ -25,9 +24,7 @@ const PatronageListPage: FC = () => {
   const { searchValue, patronage, loading } = useSelector(
     (state: RootState) => state.patronages
   ); // получение данных из стора
-  const { isStaff, isAuthenticated } = useSelector(
-    (state: RootState) => state.user
-  );
+  const { isStaff } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     dispatch(getPatronageList()); // отправляем `thunk`

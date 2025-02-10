@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Button, Image } from "react-bootstrap";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./InputField.css";
 import { ROUTES } from "../Routes";
 import imgBasket from "./basket.png";
@@ -34,13 +34,7 @@ const InputField: FC<Props> = ({
   const current_count = useSelector(
     (state: RootState) => state.disabilityDraft.current_count
   );
-  const navigate = useNavigate();
   // Событие нажатия на иконку "корзины"
-  const handleClick = (app_id: number | null) => {
-    if (app_id == 1) {
-      navigate(`${ROUTES.DISABILITY}/${app_id}`);
-    }
-  };
   return (
     <>
       {!isStaff ? (

@@ -1,8 +1,7 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
-import axios from "axios";
+import { ChangeEvent, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ROUTE_LABELS, ROUTES } from "../Routes";
 import { AppDispatch, RootState } from "../store";
 import {
@@ -16,14 +15,14 @@ import {
 import "./DisabilityTablePage.css";
 import { BreadCrumbs } from "../components/BreadCrumbs";
 import ForbiddenPage from "./ForbiddenPage";
-import { Table, Button, Row, Col, Form, Spinner } from "react-bootstrap";
-import { toast } from "react-toastify";
+import { Table, Button, Row, Col, Form } from "react-bootstrap";
+// import { toast } from "react-toastify";
 import svgQR from "../components/qr.svg";
 import svgTime from "../components/time.svg";
 
 const DisabilityTablePage = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { disabilities, loading, status, startDate, endDate, creatorFilter } =
+  const { disabilities, status, startDate, endDate, creatorFilter } =
     useSelector((state: RootState) => state.disabilities);
   const navigate = useNavigate();
   const isAuthenticated = useSelector(
@@ -57,16 +56,16 @@ const DisabilityTablePage = () => {
     dispatch(setEndDate(e.target.value));
   };
 
-  const handleSaveFilters = async () => {
-    try {
-      await dispatch(getDisabilities()).unwrap();
-    } catch (error) {
-      toast.error("Ошибка фильтрации!", {
-        position: "bottom-right",
-        autoClose: 2000, // Авто-закрытие через 3 сек
-      });
-    }
-  };
+  // const handleSaveFilters = async () => {
+  //   try {
+  //     await dispatch(getDisabilities()).unwrap();
+  //   } catch (error) {
+  //     toast.error("Ошибка фильтрации!", {
+  //       position: "bottom-right",
+  //       autoClose: 2000, // Авто-закрытие через 3 сек
+  //     });
+  //   }
+  // };
 
   const handleButtonClick = (
     id: number | undefined,

@@ -1,20 +1,11 @@
 import { FC, useEffect } from "react";
-import {
-  InputGroup,
-  Col,
-  Button,
-  Row,
-  Container,
-  Card,
-  Form,
-} from "react-bootstrap";
+import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { ROUTE_LABELS, ROUTES } from "../Routes";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./LoginPage.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
-import React, { useState, ChangeEvent, FormEvent } from "react";
-import { regUserAsync } from "../slices/userSlice";
+import React, { FormEvent } from "react";
 import { toast } from "react-toastify";
 import { BreadCrumbs } from "../components/BreadCrumbs";
 import {
@@ -25,7 +16,6 @@ import {
   setPatronage,
   updatePatronageAsync,
 } from "../slices/PatronageEditSlice";
-import { setDisabilityData } from "../slices/disabilityDraftSlice";
 import ForbiddenPage from "./ForbiddenPage";
 
 export const PatronageEditPage: FC = () => {
@@ -34,17 +24,11 @@ export const PatronageEditPage: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const isDraft = useSelector(
-    (state: RootState) => state.disabilityDraft.isDraft
-  );
-
-  const { patronage, loading, file } = useSelector(
+  const { patronage, file } = useSelector(
     (state: RootState) => state.patronageEdit
   );
 
-  const { isStaff, isAuthenticated } = useSelector(
-    (state: RootState) => state.user
-  );
+  const { isStaff } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     if (id) {

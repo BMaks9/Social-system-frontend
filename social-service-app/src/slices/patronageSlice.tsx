@@ -1,10 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { api } from "../api";
-import { GetPatronages, GetPatronagesDetail } from "../api/Api";
+import { GetPatronagesDetail } from "../api/Api";
 import { PATRONAGES_MOCK } from "../modules/mock"; // мок-данные
 import { setId, setCount } from "./disabilityDraftSlice";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 interface PatronageState {
   searchValue: string;

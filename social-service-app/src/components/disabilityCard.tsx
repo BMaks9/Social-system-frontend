@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import "./PatronageCard.css";
-import defaultImg from "./defaultImg.jpg";
 import { ROUTES } from "../Routes";
 import { NavLink } from "react-router-dom";
 import {
@@ -57,7 +56,7 @@ export const DisabilityCard: FC<ICardProps> = ({
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
 
     // Убедимся, что disabilityData и disability_patronages существуют
     if (disabilityData?.disability_patronages) {

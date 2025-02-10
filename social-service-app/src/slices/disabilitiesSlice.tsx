@@ -23,7 +23,7 @@ const initialState: DisabilitiesState = {
 
 export const getDisabilities = createAsyncThunk(
   "disability/disabilities",
-  async (_, { getState, rejectWithValue }) => {
+  async (_, { getState }) => {
     const { disabilities }: any = getState(); // Получаем из состояния фильтр по имени
     const { status, startDate, endDate } = disabilities;
 
@@ -95,7 +95,7 @@ const disabilitiesSlice = createSlice({
         state.loading = true;
       })
 
-      .addCase(completedDisabilities.fulfilled, (state, action) => {
+      .addCase(completedDisabilities.fulfilled, (state) => {
         state.loading = false;
       })
 

@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { api } from "../api";
 import axios from "axios";
-import { RootState } from "../store";
 import Cookies from "js-cookie";
-import { GetPatronages, GetPatronagesDetail } from "../api/Api";
 
 export interface Patronage {
   id?: number;

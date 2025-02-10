@@ -1,8 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { api } from "../api";
-import { GetPatronages, GetPatronagesDetail } from "../api/Api";
-import { PATRONAGES_MOCK } from "../modules/mock"; // мок-данные
-import { setId, setCount } from "./disabilityDraftSlice";
+import { GetPatronagesDetail } from "../api/Api";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -184,7 +181,7 @@ const patronageEditSlice = createSlice({
       .addCase(deletePatronageAsync.pending, (state) => {
         state.loading = true;
       })
-      .addCase(deletePatronageAsync.fulfilled, (state, action) => {
+      .addCase(deletePatronageAsync.fulfilled, (state) => {
         state.loading = false;
       })
       .addCase(deletePatronageAsync.rejected, (state) => {
@@ -198,7 +195,7 @@ const patronageEditSlice = createSlice({
         state.loading = false;
         state.patronage = action.payload;
       })
-      .addCase(imgPatronageAsync.rejected, (state, action) => {
+      .addCase(imgPatronageAsync.rejected, (state) => {
         state.loading = false;
       });
   },

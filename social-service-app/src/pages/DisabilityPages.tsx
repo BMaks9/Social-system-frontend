@@ -1,14 +1,13 @@
 import "./PatronagesDetail.css";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { BreadCrumbs } from "../components/BreadCrumbs";
 import { ROUTES, ROUTE_LABELS } from "../Routes";
 import { AppDispatch, RootState } from "../store";
-import { Card, Button, Form, Col, Row, Spinner, Image } from "react-bootstrap";
+import { Button, Form, Col, Row, Spinner, Image } from "react-bootstrap";
 import { DisabilityCard } from "../components/disabilityCard";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
-  deletePatronagesFromDisability,
   getDisability,
   saveDataDisability,
 } from "../slices/disabilityDraftSlice";
@@ -35,7 +34,7 @@ const DisabilityPage: FC = () => {
     (state: RootState) => state.disabilityDraft.isDraft
   );
 
-  const { disabilityData, error } = useSelector(
+  const { disabilityData } = useSelector(
     (state: RootState) => state.disabilityDraft
   );
 
@@ -62,9 +61,6 @@ const DisabilityPage: FC = () => {
     // если произошла ошибка или данные не найдены
     return <ForbiddenPage />;
   }
-  const handleCardClick = (id: number | undefined) => {
-    navigate(`${ROUTES.SERVICES}/${id}`);
-  };
 
   const handleDelete = async (e: React.FormEvent) => {
     e.preventDefault();

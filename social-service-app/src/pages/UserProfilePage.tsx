@@ -1,20 +1,12 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
-import {
-  Col,
-  Button,
-  Row,
-  Container,
-  Card,
-  Form,
-  InputGroup,
-} from "react-bootstrap";
+import { useState, ChangeEvent, FormEvent } from "react";
+import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { ROUTE_LABELS, ROUTES } from "../Routes";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./LoginPage.css";
 import "./PatronagesDetail.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AppDispatch, RootState } from "../store";
-import { loginUserAsync, updateUserAsync } from "../slices/userSlice";
+import { updateUserAsync } from "../slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { BreadCrumbs } from "../components/BreadCrumbs";
 import { toast } from "react-toastify";
@@ -33,7 +25,6 @@ const UserProfilePage = () => {
     confirmPassword: "",
     email: "",
   });
-  const error = useSelector((state: RootState) => state.user.error);
 
   // Обработчик события изменения полей ввода
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +43,7 @@ const UserProfilePage = () => {
     }
 
     const filteredData = Object.fromEntries(
-      Object.entries(formData).filter(([key, value]) => value !== "")
+      Object.entries(formData).filter(([value]) => value !== "")
     );
     try {
       await dispatch(updateUserAsync(filteredData)).unwrap();

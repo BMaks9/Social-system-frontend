@@ -2,8 +2,8 @@ import "./PatronagesDetail.css";
 import { FC, useEffect, useState } from "react";
 import { BreadCrumbs } from "../components/BreadCrumbs";
 import { ROUTES, ROUTE_LABELS } from "../Routes";
-import { useParams, useNavigate } from "react-router-dom";
-import { Patronage, getPatronageId } from "../modules/SocialServiceApi";
+import { useParams } from "react-router-dom";
+import { getPatronageId } from "../modules/SocialServiceApi";
 import { Col, Row, Spinner, Image } from "react-bootstrap";
 import { PATRONAGES_MOCK } from "../modules/mock";
 import defaultImg from "../components/defaultImg.jpg";
@@ -15,7 +15,6 @@ export const PatronageDetailPage: FC = () => {
   const [loading, setLoading] = useState<boolean>(true); // для контроля загрузки
   const [error, setError] = useState<boolean>(false); // для контроля ошибки
   const { id } = useParams(); // ид страницы
-  const navigate = useNavigate(); // для навигации в случае ошибки 404
 
   useEffect(() => {
     if (!id) return;

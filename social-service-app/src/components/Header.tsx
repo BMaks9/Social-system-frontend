@@ -1,12 +1,8 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { ROUTES } from "../Routes";
 import { NavLink } from "react-router-dom";
-
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"; // Импортируем необходимые хуки из Redux
-import axios from "axios"; // Импортируем axios
-import Cookies from "js-cookie"; // Импортируем js-cookie для работы с cookies
 
 import { AppDispatch, RootState } from "../store";
 import { logoutUserAsync } from "../slices/userSlice";

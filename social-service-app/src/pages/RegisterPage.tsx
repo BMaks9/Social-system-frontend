@@ -1,19 +1,11 @@
 import { FC } from "react";
-import {
-  InputGroup,
-  Col,
-  Button,
-  Row,
-  Container,
-  Card,
-  Form,
-} from "react-bootstrap";
+import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { ROUTES } from "../Routes";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store";
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../store";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { regUserAsync } from "../slices/userSlice";
 import { toast } from "react-toastify";
 
@@ -27,7 +19,6 @@ export const RegisterPage: FC = () => {
     confirmPassword: "",
     email: "",
   });
-  const error = useSelector((state: RootState) => state.user.error);
 
   // Обработчик события изменения полей ввода
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

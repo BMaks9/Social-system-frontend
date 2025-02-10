@@ -1,10 +1,9 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { ROUTES } from "../Routes";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import "./PatronagesDetail.css";
-import Cookie from "js-cookie";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AppDispatch, RootState } from "../store";

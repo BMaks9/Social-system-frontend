@@ -1,6 +1,4 @@
-import { Patronage } from "./SocialServiceApi";
-import { GetPatronages, GetPatronagesDetail } from '../api/Api';
-import { current } from "@reduxjs/toolkit";
+import { GetPatronagesDetail } from '../api/Api';
 export const PATRONAGES_MOCK: GetPatronagesDetail[] =
 [
     {

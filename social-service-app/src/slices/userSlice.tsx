@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { api } from "../api";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -172,7 +171,7 @@ const userSlice = createSlice({
       .addCase(regUserAsync.pending, (state) => {
         state.error = null;
       })
-      .addCase(regUserAsync.fulfilled, (state, action) => {
+      .addCase(regUserAsync.fulfilled, (state) => {
         state.error = null;
       })
       .addCase(regUserAsync.rejected, (state, action) => {
