@@ -4,3 +4,4 @@
 Смежные репозитории:
 <br>фронтенд (React, Vite) : (https://github.com/BMaks9/Social-system-frontend)
 <br>бэкенд (Pyhton, Django) : (https://github.com/BMaks9/Social-system)
+<br>github-pages : (https://bmaks9.github.io/Social-system-frontend/)
