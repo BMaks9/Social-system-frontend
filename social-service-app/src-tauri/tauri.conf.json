@@ -5,7 +5,7 @@
   "identifier": "com.service.dev",
   "build": {
     "frontendDist": "../dist",
-    "devUrl": "http://192.168.56.1:3000",
+    "devUrl": "https://192.168.56.1:3000",
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build"
   },
